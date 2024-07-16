@@ -1,6 +1,3 @@
-Info
-
-
 Requirements:
 
 You will need to install pip and pillow.
@@ -14,3 +11,4 @@ Install Pillow to your blender:
 - Click on the explorer path, type cmd
 - In the newly opened terminal type: pip install pillow
 
+After the prerequisites are installed you can freely install the addon as usual. (preferences -> addons -> install -> select .py)
