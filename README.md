@@ -13,3 +13,13 @@ To install the addon:
 - When installed restart blender
 
 - The addon should work when opening blender again.
+
+How to use:
+
+- Copy an image to your clipboard
+
+- Go to blender, shift+a in object mode
+
+- Select "Paste Pureref image"
+
+  
