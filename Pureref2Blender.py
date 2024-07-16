@@ -7,7 +7,22 @@ bl_info = {
 import bpy
 import os
 import tempfile
-from bpy_extras.image_utils import load_image
+import subprocess
+import sys
+
+def ensure_pillow():
+    try:
+        import PIL
+    except ImportError:
+        # Attempt to install Pillow
+        try:
+            import ensurepip
+            ensurepip.bootstrap()
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "Pillow"])
+        except Exception as e:
+            print(f"Failed to install Pillow: {e}")
+
+ensure_pillow()
 from PIL import ImageGrab, Image
 
 class PastePureRefImageOperator(bpy.types.Operator):
