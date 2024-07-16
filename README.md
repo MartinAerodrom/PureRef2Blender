@@ -1,14 +1,15 @@
-Requirements:
+To install the addon:
 
-You will need to install pip and pillow.
+- Open your preferences in blender
 
-Pip install instructions:
-https://phoenixnap.com/kb/install-pip-windows
+- Go to the Add-ons tab
 
-Install Pillow to your blender:
+- Click on Install an addon button
 
-- Open your blender python folder path (C:\Program Files\Blender Foundation\Blender 3.6\3.6\python)
-- Click on the explorer path, type cmd
-- In the newly opened terminal type: pip install pillow
+- Select the script
 
-After the prerequisites are installed you can freely install the addon as usual. (preferences -> addons -> install -> select .py)
+- If pillow is not installed you will see a "install pillow" button, click on it
+
+- When installed restart blender
+
+- The addon should work when opening blender again.
