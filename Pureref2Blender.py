@@ -2,6 +2,9 @@ bl_info = {
     "name": "Paste PureRef Images",
     "blender": (2, 80, 0),
     "category": "Image",
+    "author": "Martin Fir, Tine Maher, The Wall",
+    "description": "Paste images from clipboard or local files into Blender. Supports jpg, png, avif, heic, webp, gif formats.",
+    "version": (1, 0, 0),
 }
 
 import bpy
@@ -36,6 +39,7 @@ class PastePureRefImageOperator(bpy.types.Operator):
     """Paste Image from Clipboard"""
     bl_idname = "image.paste_pureref_image"
     bl_label = "Paste PureRef Image"
+    bl_icon = 'IMAGE_DATA'
 
     @classmethod
     def poll(cls, context):
@@ -52,10 +56,27 @@ class PastePureRefImageOperator(bpy.types.Operator):
                 
                 img = bpy.data.images.load(temp_path)
                 
+                # Calculate position for new image
+                x_offset = 0
+                y_offset = 0
+                count = 0
+                padding = 1.0  # 1 meter padding
+                
+                for obj in context.collection.objects:
+                    if obj.type == 'EMPTY' and obj.empty_display_type == 'IMAGE':
+                        x_offset += obj.dimensions.x + padding  # Add padding
+                        
+                        # Start a new row after 7 images
+                        if count % 7 == 6:
+                            y_offset -= obj.dimensions.y + padding  # Vertical spacing between rows
+                            x_offset = 0
+                        
+                        count += 1
+
                 ref = bpy.data.objects.new(name=img.name, object_data=None)
                 ref.empty_display_type = 'IMAGE'
                 ref.data = img
-                ref.location = context.scene.cursor.location
+                ref.location = (x_offset, y_offset, 0)  # Adjust Y and Z as needed
                 context.collection.objects.link(ref)
 
                 self.report({'INFO'}, "Image pasted from clipboard")
@@ -78,7 +99,7 @@ class PasterefPreferences(bpy.types.AddonPreferences):
             layout.label(text="Please restart Blender after installation.", icon='INFO')
 
 def menu_func(self, context):
-    self.layout.operator(PastePureRefImageOperator.bl_idname)
+    self.layout.operator(PastePureRefImageOperator.bl_idname, icon='IMAGE_DATA')
 
 def register():
     bpy.utils.register_class(InstallPillowOperator)
